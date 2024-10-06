@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gender Equality and Climate Change Initiatives</title>
+    <style>
+        :root {
+            --primary-color: #2c5e50;
+            --secondary-color: #27ae60;
+            --text-color: #333;
+            --bg-color: #fff;
+            --link-color: #219653;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #1e4037;
+            --secondary-color: #27ae60;
+            --text-color: #ffffff;
+            --bg-color: #2c3e50;
+            --link-color: #2ecc71;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            background: url('climate-solutions.jpg');
+            color: rgb(142, 142, 142);
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .nav-container {
+            padding: 1rem;
+            background: var(--bg-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-pills {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-pill {
+            padding: 0.5rem 1rem;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-pill.active {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        nav {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+            font-size: 14px;
+        }
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .login-btn {
+            border: 2px solid #fff;
+            border-radius: 20px;
+            padding: 5px 15px;
+        }
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .stat-card {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: var(--bg-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            scroll-margin-top: 100px; /* Adds margin for sticky nav when scrolling to section */
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--secondary-color);
+            width: 75%;
+            animation: fillProgress 2s ease-out;
+        }
+
+        .list-container {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .list-item {
+            padding: 1rem;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+        }
+
+        .theme-switch {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .source-link {
+            display: inline-block;
+            color: var(--link-color);
+            text-decoration: none;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
+        .closing-message {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            margin-top: 4rem;
+        }
+
+        .closing-message h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .closing-message p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        @keyframes fillProgress {
+            from { width: 0; }
+            to { width: 75%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+        <nav>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+            </div>
+            <a href="login.html" class="login-btn">Log In</a>
+        </nav>
+    <div class="header-content">
+        <h1>Gender Equality and Climate Change Initiatives</h1>
+        <p>Exploring solutions for gender inequality in climate science and research</p>
+        <div class="header-wave"></div>
+    </div>
+
+    <div class="nav-container">
+        <div class="nav-pills">
+            <div class="nav-pill" data-target="mentorship">Mentorship</div>
+            <div class="nav-pill" data-target="fellowship">Fellowship</div>
+            <div class="nav-pill" data-target="scholarship">Scholarship</div>
+            <div class="nav-pill" data-target="residency">Residency</div>
+            <div class="nav-pill" data-target="research">Research</div>
+            <div class="nav-pill" data-target="job-placement">Job Placement</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div id="programs-count" class="stat-number">12</div>
+                <div>Active Programs</div>
+            </div>
+            <div class="stat-card">
+                <div id="women-count" class="stat-number">250+</div>
+                <div>Women Scientists</div>
+            </div>
+            <div class="stat-card">
+                <div id="partnerships-count" class="stat-number">45</div>
+                <div>Global Partnerships</div>
+            </div>
+        </div>
+
+        <div id="mentorship" class="section">
+            <h2>NASA STEM Mentorship</h2>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="list-container">
+                <div class="list-item">
+                    <h3>STEM Engagement Programs</h3>
+                    <p>NASA has implemented numerous STEM programs focusing on increasing diversity in science and technology domains.</p>
+                    <a href="https://www.nasa.gov/stem/" target="_blank" class="source-link">NASA STEM Engagement Program →</a>
+                </div>
+                <div class="list-item">
+                    <h3>Workshops and Educational Materials</h3>
+                    <p>Comprehensive instructional resources, including workshops and online courses for aspiring scientists.</p>
+                    <a href="https://www.nasa.gov/stem/foreducators/index.html" target="_blank" class="source-link">NASA Education Resources →</a>
+                </div>
+                <div class="list-item">
+                    <h3>Earth Science Division</h3>
+                    <p>Conducts vital research on environmental monitoring and climate change impacts.</p>
+                    <a href="https://science.nasa.gov/earth-science" target="_blank" class="source-link">NASA Earth Science Division →</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="fellowship" class="section">
+            <h2>Fellowship Programs</h2>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="list-container">
+                <div class="list-item">
+                    <h3>Gender Empowerment</h3>
+                    <p>Fellowship programs can provide a network accessible for women, particularly in sectors where they have historically been underrepresented to reach out to mentors, grasp opportunities and resources to take part in male-dominated fields, such as climate science, engineering and environmental policy.</p>
+                    <a href="https://www.unwomen.org/en/how-we-work/capacity-development-and-training" target="_blank" class="source-link">UN Women Fellowship Programs →</a>
+                </div>
+                <div class="list-item">
+                    <h3>Climate Action Initiatives</h3>
+                    <p>1.2Main initiatives of the fellowship can empower women to take leading and implementing climate adaptation and mitigation projects in their local communities, helping them recognize their unique challenges and solutions.</p>
+                    <a href="https://unfccc.int/topics/gender/resources/gender-action-plan" target="_blank" class="source-link">UNFCCC Gender Action Plan →</a>
+                </div>
+                <div class="list-item">
+                    <h3>Leadership Development</h3>
+                    <p>1.3Fellowships can propose leadership, advocacy and policy-making training to enhance their roles in shaping their environmental legislation.</p>
+                    <a href="https://www.iucn.org/our-work/gender" target="_blank" class="source-link">IUCN Gender Programme →</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="scholarship" class="section">
+            <h2>Scholarship Programs</h2>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="list-container">
+                <div class="list-item">
+                    <h3>Research and Data Generation</h3>
+                    <p>Scholarship at the intersection of gender and climate issues is crucial for understanding the unique challenges faced by women, especially in marginalized communities.</p>
+                    <a href="https://wedo.org/global-gender-and-climate-alliance/#:~:text=Launch%20of%20the%20Global%20Gender%20and%20Climate%20Alliance.%20Women%20and" target="_blank" class="source-link">Global Gender and Climate Alliance - WEDO →</a>
+                </div>
+                <div class="list-item">
+                    <h3>Advocacy and Policy Development</h3>
+                    <p>Research can play a crucial role in informing and shaping policies that tackle the unique vulnerabilities of different genders to climate change.</p>
+                    <a href="https://unfccc.int/topics/gender/workstreams/the-gender-action-plan#:~:text=The%20enhanced%20gender%20action%20plan%20sets%20out%20objectives%20and" target="_blank" class="source-link">The Gender Action Plan | UNFCCC →</a>
+                </div>
+                <div class="list-item">
+                    <h3>Education and Capacity Building</h3>
+                    <p>Studies in gender and climate can inspire a new wave of researchers, activists, and policymakers who recognize the importance of an inclusive strategy for addressing climate change.</p>
+                    <a href="https://unfccc.int/topics/education-and-youth/big-picture/ACE#:~:text=The%20over-arching%20goal%20of%20ACE%20is%20to%20empower%20all%20members" target="_blank" class="source-link">Action for Climate Empowerment | UNFCCC →</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="residency" class="section">
+            <h2>Residency Programs</h2>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="list-container">
+                <div class="list-item">
+                    <h3>Access to Funding and Resources</h3>
+                    <p>Residency programs can support women scientists by providing funding and access to important resources. This support allows them to use laboratories, specialized equipment, and data for their research on climate change.</p>
+                    <a href="https://appliedsciences.nasa.gov/introduction-nasa-resources-climate-change-applications#:~:text=Our%20community%20works%20together%20to%20harness%20the%20power%20of%20these" target="_blank" class="source-link">Introduction to NASA Resources for Climate Change Applications | NASA Applied Sciences →</a>
+                </div>
+                <div class="list-item">
+                    <h3>Networking Opportunities</h3>
+                    <p>Residency programs can provide the opportunities to collaboration between scientists from different fields. The networking can help women create professional relationships and find mentors in the domain of climate change.</p>
+                    <a href="https://roundupreads.jsc.nasa.gov/roundup/2049#:~:text=On%20June%201,%20more%20than%20100%20professionals%20at%20NASA%20joined" target="_blank" class="source-link">One-on-One Networking Program Makes a Strong Impact as it Goes Agencywide (nasa.gov) →</a>
+                </div>
+                <div class="list-item">
+                    <h3>Skill Development</h3>
+                    <p>Residency programs often offer the opportunity to participate in workshops and trainings which use the advanced techniques of research and data analysis. These kind of activities can help women scientists enhance their careers and effectively share their findings with scientific community.</p>
+                    <a href="https://www.giss.nasa.gov/edu/ccri/#:~:text=The%20Climate%20Change%20Research%20Initiative%20(CCRI)%20program%20is%20an" target="_blank" class="source-link">NASA GISS: Climate Change Research Initiative →</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="research" class="section">
+            <h2>Research Programs</h2>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="list-container">
+                <div class="list-item">
+                    <h3>Scientific Infrastructure Access</h3>
+                    <p>This type of access greatly simplifies the process of researching because women can use specialized tools and technologies which may be out of reach without funding.</p>
+                    <a href="https://www.jpl.nasa.gov/news/nasa-awards-14-million-to-universities-for-supportive-stem-efforts/" target="_blank" class="source-link">NASA Awards $14 Million to Universities for Supportive STEM Efforts | NASA Jet Propulsion Laboratory (JPL) →</a>
+                </div>
+                <div class="list-item">
+                    <h3>Publication Support</h3>
+                    <p>Support in this process helps to increase the value of their work, which gives new opportunities for funding, cooperation and participation in scientific discussions, and also contributes to the considering of women's perspectives in climate change research.</p>
+                    <a href="https://science.nasa.gov/learn/publications/" target="_blank" class="source-link">SciAct Publications - NASA Science →</a>
+                </div>
+                <div class="list-item">
+                    <h3>Women-Specific Grants</h3>
+                    <p>Grants intended only for women create an opportunity for equal participation in scientific research, especially in areas where women are traditionally underestimated, such as climate science.</p>
+                    <a href="https://postdocs.msu.edu/2023/11/american-association-of-university-women-funding-opportunities/" target="_blank" class="source-link">American Association of University Women: Funding Opportunities - MSU Postdocs →</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="job-placement" class="section">
+            <h2>Job Placement and Internships</h2>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="list-container">
+                <div class="list-item">
+                    <h3>Career Transitions</h3>
+                    <p>Support for interdisciplinary roles and flexible work arrangements.</p>
+                    <a href="https://pages.apa.org/career-transitions/" target="_blank" class="source-link">American Psychological Association Career Transitions →</a>
+                </div>
+                <div class="list-item">
+                    <h3>Targeted Internship Programs</h3>
+                    <p>Gender-focused opportunities in climate science organizations.</p>
+                    <a href="https://twc.edu/programs/library-of-congress-internships-loci-program" target="_blank" class="source-link">Library of Congress Internships (LOCI) Program →</a>
+                </div>
+                <div class="list-item">
+                    <h3>Awareness Campaigns</h3>
+                    <p>Promoting women role models; highlighting successful women climate scientists in media, social platforms and academic settings can inspire the next generation and encourage companies to offer internships.</p>
+                    <a href="https://www.globalcitizen.org/en/content/women-scientists-climate-change-solutions-stem/" target="_blank" class="source-link">10 Women Scientists Leading the Fight Against the Climate Crisis →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="closing-message">
+        <h2>Together we can make a difference in combating climate change</h2>
+        <p>Take action today for a sustainable tomorrow</p>
+    </div>
+
+    <button class="theme-switch" role="button" aria-label="Toggle theme">🌓</button>
+
+    <script>
+        const themeSwitch = document.querySelector('.theme-switch');
+        themeSwitch.addEventListener('click', () => {
+            document.body.dataset.theme = document.body.dataset.theme === 'dark' ? '' : 'dark';
+        });
+
+        const navPills = document.querySelectorAll('.nav-pill');
+        
+        // Update active pill based on scroll position
+        const sections = document.querySelectorAll('.section');
+        
+        function updateActiveSection() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navPills.forEach(pill => {
+                pill.classList.remove('active');
+                if (pill.dataset.target === current) {
+                    pill.classList.add('active');
+                }
+            });
+        }
+
+        // Smooth scroll to section
+        navPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                const target = document.getElementById(pill.dataset.target);
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Listen for scroll to update active pill
+        window.addEventListener('scroll', updateActiveSection);
+
+        // Animate numbers
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Initialize number animations
+        document.addEventListener('DOMContentLoaded', () => {
+            animateValue(document.getElementById('programs-count'), 0, 12, 2000);
+            animateValue(document.getElementById('women-count'), 0, 250, 2000);
+            animateValue(document.getElementById('partnerships-count'), 0, 45, 2000);
+        });
+    </script>
+</body>
+</html>

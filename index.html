@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insightful Impacts</title>
+    <style>
+        .login-btn {
+            border: 2px solid #fff;
+            border-radius: 20px;
+            padding: 5px 15px;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .login-btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100%;
+            overflow: hidden;
+            color: #fff;
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('space-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            z-index: -1;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: relative;
+        }
+        nav {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+            padding: 10px 20px;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+            font-size: 14px;
+        }
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .login-btn {
+            border: 2px solid #fff;
+            border-radius: 20px;
+            padding: 5px 15px;
+        }
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .tabs-container {
+            position: absolute;
+            bottom: 20px; /* Adjusted from 100px to 50px to move tabs lower */
+            left: 0;
+            right: 0;
+            overflow: visible;
+            height: 300px;
+        }
+        .tabs {
+            display: flex;
+            transition: transform 0.5s ease;
+            padding: 0 20px;
+            position: relative;
+        }
+        .tab {
+            width: 250px;
+            height: 250px;
+            flex: 0 0 250px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            font-size: 18px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+            margin: 0 75px;
+        }
+        .tab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 200, 255, 0.7);
+        }
+        .tab img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: filter 0.3s;
+        }
+        .tab:hover img {
+            filter: brightness(30%);
+        }
+        .tab .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tab:hover .content {
+            opacity: 1;
+        }
+        .tab .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .tab .description {
+            font-size: 14px;
+            display: none;
+        }
+        .tab:hover .description {
+            display: block;
+        }
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s, opacity 0.3s;
+        }
+        .nav-arrow:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .nav-arrow.left {
+            left: 20px;
+        }
+        .nav-arrow.right {
+            right: 20px;
+        }
+        .nav-arrow.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .page-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            z-index: 1000;
+            clip-path: circle(0% at 50% 50%);
+            transition: clip-path 1s ease-in-out;
+        }
+        .page-transition.active {
+            clip-path: circle(150% at 50% 50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <nav>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#climate" onclick="showContent('climate')">What is Climate Change</a>
+                <a href="#women" onclick="showContent('women')">Role of Women and Men in Climate Science</a>
+                <a href="#current-projects" onclick="showContent('projects')">Current Projects</a>
+                <a href="#local-impact" onclick="showContent('local-impact')">Is My Area Affected</a>
+                <a href="#solutions" onclick="showContent('solutions')">How Do We Tackle It</a>
+                <a href="about.html">About Us</a>
+            </div>
+            <a href="login.html" class="login-btn">Log In</a>
+        </nav>
+        
+        <div class="tabs-container">
+            <div class="tabs">
+                <div class="tab" onclick="showContent('climate')">
+                    <img src="climate-change-earth.jpg" alt="Earth affected by climate change">
+                    <div class="content">
+                        <div class="title">What is Climate Change</div>
+                        <div class="description">Explore the causes and effects of global climate change and its impact on our planet.</div>
+                    </div>
+                </div>
+                <div class="tab" onclick="showContent('women')">
+                    <img src="women-in-climate-science.jpg" alt="Woman scientist studying climate">
+                    <div class="content">
+                        <div class="title">Role of Women and Men in Climate Science</div>
+                        <div class="description">Discover the crucial contributions of women and men scientists in understanding and addressing climate change.</div>
+                    </div>
+                </div>
+                <div class="tab" onclick="showContent('projects')">
+                    <img src="climate-research-lab.jpg" alt="Climate research laboratory">
+                    <div class="content">
+                        <div class="title">Current Projects</div>
+                        <div class="description">Learn about ongoing research and initiatives aimed at mitigating climate change effects.</div>
+                    </div>
+                </div>
+                <div class="tab" onclick="showContent('local-impact')">
+                    <img src="local-climate-impact.jpg" alt="Local area affected by climate change">
+                    <div class="content">
+                        <div class="title">Is My Area Affected</div>
+                        <div class="description">Understand how climate change is impacting your local region and community.</div>
+                    </div>
+                </div>
+                <div class="tab" onclick="showContent('solutions')">
+                    <img src="climate-solutions.jpg" alt="Climate change solutions">
+                    <div class="content">
+                        <div class="title">How Do We Tackle It</div>
+                        <div class="description">Explore strategies and actions to combat climate change at individual and global levels.</div>
+                    </div>
+                </div>
+            </div>
+            <button class="nav-arrow left hidden" onclick="slideLeft()">&lt;</button>
+            <button class="nav-arrow right" onclick="slideRight()">&gt;</button>
+        </div>
+    </div>
+
+    <div class="page-transition"></div>
+
+    <script>
+        const tabs = document.querySelector('.tabs');
+        const tabWidth = 400; // Width of tab + margin
+        let currentPosition = 0;
+        const totalTabs = document.querySelectorAll('.tab').length;
+        const visibleTabs = 3;
+
+        const leftArrow = document.querySelector('.nav-arrow.left');
+        const rightArrow = document.querySelector('.nav-arrow.right');
+
+        function slideLeft() {
+            if (currentPosition > 0) {
+                currentPosition--;
+                updatePosition();
+            }
+        }
+
+        function slideRight() {
+            if (currentPosition < totalTabs - visibleTabs) {
+                currentPosition++;
+                updatePosition();
+            }
+        }
+
+        function updatePosition() {
+            tabs.style.transform = `translateX(-${currentPosition * tabWidth}px)`;
+            updateArrows();
+        }
+
+        function updateArrows() {
+            leftArrow.classList.toggle('hidden', currentPosition === 0);
+            rightArrow.classList.toggle('hidden', currentPosition >= totalTabs - visibleTabs);
+        }
+
+        function showLoginForm() {
+            alert("Login functionality is not implemented yet.");
+        }
+
+        function showContent(tab) {
+            let targetPage;
+            let tabSelector;
+
+            switch(tab) {
+                case 'climate':
+                    targetPage = 'climatepage.html';
+                    tabSelector = '.tab[onclick="showContent(\'climate\')"]';
+                    break;
+                case 'women':
+                    targetPage = 'climatepage2.html';
+                    tabSelector = '.tab[onclick="showContent(\'women\')"]';
+                    break;
+                case 'projects':
+                    targetPage = 'climatepage3.html';
+                    tabSelector = '.tab[onclick="showContent(\'projects\')"]';
+                    break;
+                case 'local-impact':
+                    targetPage = 'climatepage4.html';
+                    tabSelector = '.tab[onclick="showContent(\'local-impact\')"]';
+                    break;
+                case 'solutions':
+                    targetPage = 'climatepage5.html';
+                    tabSelector = '.tab[onclick="showContent(\'solutions\')"]';
+                    break;
+                default:
+                    console.log('Selected tab:', tab);
+                    return; // Exit the function for other tabs
+            }
+
+            const selectedTab = document.querySelector(tabSelector);
+            const tabImg = selectedTab.querySelector('img');
+            const pageTransition = document.querySelector('.page-transition');
+
+            pageTransition.style.backgroundImage = `url(${tabImg.src})`;
+            pageTransition.classList.add('active');
+
+            // Use the transitionend event to trigger the page change
+            pageTransition.addEventListener('transitionend', function onTransitionEnd() {
+                pageTransition.removeEventListener('transitionend', onTransitionEnd);
+                window.location.href = targetPage;
+            });
+        }
+
+        // Initialize arrows
+        updateArrows();
+    </script>
+</body>
+</html>
