@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UN Sustainable Development Goals and Climate Projects</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #6fcf97;
+            --background-color: #f5f7fa;
+            --text-color: #333333;
+            --card-background: #ffffff;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+        }
+        .header-content {
+            background-image: url('climate-research-lab.jpg');
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .header-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .header-content p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .nav-pills {
+            display: flex;
+            justify-content: center;
+            background-color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav-pill {
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 20px;
+        }
+        .nav-pill:hover, .nav-pill.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        nav {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+            font-size: 14px;
+        }
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .login-btn {
+            border: 2px solid #fff;
+            border-radius: 20px;
+            padding: 5px 15px;
+        }
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .section {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .info-card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+        h2 {
+            color: white;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .goal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        .goal-item {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .goal-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .goal-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        .goal-number {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .goal-title {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .project-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .project-list li {
+            background-color: var(--card-background);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+        }
+        .project-list li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .project-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: var(--card-background);
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .closing-message {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--primary-color);
+            color: rgb(0, 0, 0);
+            margin-top: 4rem;
+        }
+
+        .closing-message h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .closing-message p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <nav>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+            </div>
+            <a href="login.html" class="login-btn">Log In</a>
+        </nav>
+    <div class="header-content">
+        <h1>UN Sustainable Development Goals and Climate Projects</h1>
+        <p>Exploring the United Nations' efforts to create a sustainable future and combat climate change</p>
+    </div>
+
+    <div class="nav-pills">
+        <div class="nav-pill" onclick="scrollToSection('sdgs')">SDGs</div>
+        <div class="nav-pill" onclick="scrollToSection('climate-projects')">Climate Projects</div>
+        <div class="nav-pill" onclick="scrollToSection('ongoing-projects')">Ongoing Projects</div>
+    </div>
+
+    <div class="container">
+        <div id="sdgs" class="section">
+            <h2>UN Sustainable Development Goals</h2>
+            <div class="info-card">
+                <p>The United Nations has established 17 Sustainable Development Goals (SDGs) to address global challenges and create a better future for all. These goals cover a wide range of issues, from poverty and hunger to climate action and gender equality.</p>
+            </div>
+            <div class="goal-grid">
+                <!-- SDG items will be dynamically added here -->
+            </div>
+        </div>
+
+        <div id="climate-projects" class="section">
+            <h2>UN Climate Change Projects</h2>
+            <ul class="project-list">
+                <!-- Project items will be dynamically added here -->
+            </ul>
+        </div>
+
+        <div id="ongoing-projects" class="section">
+            <h2>Ongoing UN Climate Change Projects</h2>
+            <ul class="project-list">
+                <!-- Ongoing project items will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modal-title"></h3>
+            <p id="modal-description"></p>
+        </div>
+    </div>
+
+    <div class="closing-message">
+        <h2>Together we can make a difference in combating climate change</h2>
+        <p>Take action today for a sustainable tomorrow</p>
+    </div>
+
+    <script>
+        const sdgs = [
+            {
+                icon: '🚫',
+                title: 'No Poverty',
+                description: 'Eradicate poverty in all its forms worldwide. This includes eliminating extreme poverty, currently defined as people living on less than $1.25 per day, and reducing the percentage of people living below national poverty lines. Key focus: Social protection for vulnerable groups, access to basic services, and building resilience against economic, environmental, and social shocks, particularly in regions experiencing conflict or climate disasters.'
+            },
+            {
+                icon: '🍲',
+                title: 'Zero Hunger',
+                description: 'End hunger and all forms of malnutrition by ensuring that everyone has access to sufficient and nutritious food year-round, especially in vulnerable populations like infants and children. Key focus: Promote sustainable agricultural practices, increase investment in rural infrastructure, enhance access to markets, and ensure food systems can adapt to climate change to prevent future food crises.'
+            },
+            {
+                icon: '🏥',
+                title: 'Good Health and Well-being',
+                description: 'Ensure healthy lives and promote well-being for people of all ages. This includes reducing maternal mortality, ending epidemics such as AIDS, tuberculosis, and malaria, and ensuring universal health coverage. Key focus: Access to quality healthcare services, affordable essential medicines and vaccines, health promotion, disease prevention, and tackling global health challenges such as mental health issues and environmental health risks.'
+            },
+            {
+                icon: '📚',
+                title: 'Quality Education',
+                description: 'Ensure inclusive and equitable quality education for all and promote lifelong learning opportunities. This includes eliminating gender disparities and ensuring equal access to affordable and quality technical, vocational, and higher education. Key focus: Building better education infrastructure, improving teacher training, providing scholarships for underserved populations, and promoting education for sustainable development, human rights, and gender equality.'
+            },
+            {
+                icon: '♀️',
+                title: 'Gender Equality',
+                description: 'Achieve gender equality and empower all women and girls by eliminating discrimination, violence, and harmful practices such as child marriage and female genital mutilation. Key focus: Increase women\'s leadership and participation in decision-making, ensure equal rights to economic resources, promote legal reforms, and improve access to reproductive health services.'
+            },
+            {
+                icon: '💧',
+                title: 'Clean Water and Sanitation',
+                description: 'Ensure availability and sustainable management of water and sanitation for all by providing universal access to safe and affordable drinking water, improving water quality, and reducing water scarcity. Key focus: Sustainable water use, improving water-related ecosystems, wastewater treatment, water recycling, and supporting local communities in managing water resources effectively.'
+            },
+            {
+                icon: '⚡',
+                title: 'Affordable and Clean Energy',
+                description: 'Ensure access to affordable, reliable, sustainable, and modern energy for all, focusing on expanding renewable energy use and improving energy efficiency. Key focus: Investment in clean energy technologies, increasing the share of renewables in the global energy mix, improving energy infrastructure, and expanding access to energy in underserved areas.'
+            },
+            {
+                icon: '💼',
+                title: 'Decent Work and Economic Growth',
+                description: 'Promote sustained, inclusive, and sustainable economic growth, full and productive employment, and decent work for all, including the reduction of youth unemployment and ensuring equal pay for work of equal value. Key focus: Support small and medium-sized enterprises (SMEs), improve access to financial services, ensure safe and secure working environments, and encourage sustainable tourism and innovation-driven growth.'
+            },
+            {
+                icon: '🏭',
+                title: 'Industry, Innovation and Infrastructure',
+                description: 'Build resilient infrastructure, promote inclusive and sustainable industrialization, and foster innovation. This includes upgrading infrastructure to make industries more sustainable and promoting technological innovation. Key focus: Support research and development, facilitate access to information and communication technology (ICT), develop quality, reliable, and sustainable infrastructure, and enhance the integration of small enterprises into global markets.'
+            },
+            {
+                icon: '🤝',
+                title: 'Reduced Inequality',
+                description: 'Reduce income inequality within and among countries by promoting economic inclusion regardless of age, sex, disability, race, ethnicity, origin, religion, or economic status. Key focus: Ensuring policies that promote social, economic, and political inclusion, eliminating discriminatory laws and practices, and providing financial and technical support to developing nations.'
+            },
+            {
+                icon: '🏙️',
+                title: 'Sustainable Cities and Communities',
+                description: 'Make cities and human settlements inclusive, safe, resilient, and sustainable, focusing on improving housing conditions, access to basic services, and urban planning. Key focus: Urban resilience to disasters, reducing environmental impact, ensuring accessible green spaces, and investing in public transportation systems to make cities more livable and sustainable.'
+            },
+            {
+                icon: '♻️',
+                title: 'Responsible Consumption and Production',
+                description: 'Ensure sustainable consumption and production patterns by promoting resource efficiency, reducing waste generation, and encouraging sustainable business practices. Key focus: Sustainable management and use of natural resources, halving per capita global food waste, encouraging companies to adopt sustainable practices, and promoting consumer awareness through education on sustainable development.'
+            },
+            {
+                icon: '🌡️',
+                title: 'Climate Action',
+                description: 'Take urgent action to combat climate change and its impacts by strengthening resilience and adaptive capacity to climate-related hazards and integrating climate change measures into policies and strategies. Key focus: Reduce carbon emissions, strengthen global climate cooperation through the Paris Agreement, promote renewable energy, and support climate adaptation projects, especially in developing countries vulnerable to climate impacts.'
+            },
+            {
+                icon: '🐠',
+                title: 'Life Below Water',
+                description: 'Conserve and sustainably use the oceans, seas, and marine resources to prevent overfishing, marine pollution, and ocean acidification. Key focus: Protecting marine ecosystems, reducing marine pollution, ending illegal fishing, ensuring the sustainable use of marine resources, and enhancing the conservation of coastal and marine areas.'
+            },
+            {
+                icon: '🌳',
+                title: 'Life on Land',
+                description: 'Protect, restore, and promote the sustainable use of terrestrial ecosystems, manage forests sustainably, combat desertification, halt and reverse land degradation, and stop biodiversity loss. Key focus: Conservation of biodiversity, sustainable forest management, preventing species extinction, restoring degraded ecosystems, and promoting sustainable agriculture practices.'
+            },
+            {
+                icon: '⚖️',
+                title: 'Peace and Justice Strong Institutions',
+                description: 'Promote peaceful and inclusive societies, provide access to justice for all, and build effective, accountable, and inclusive institutions at all levels, reducing violence and corruption. Key focus: Strengthening the rule of law, ensuring equal access to justice, protecting human rights, reducing arms trafficking, and fostering transparent, accountable institutions.'
+            },
+            {
+                icon: '🤲',
+                title: 'Partnerships to achieve the Goal',
+                description: 'Strengthen the means of implementation and revitalize global partnerships for sustainable development, particularly by mobilizing financial resources, improving access to technology, and fostering international cooperation. Key focus: Enhance cooperation between governments, the private sector, and civil society, boost technology and innovation transfers, build capacity in developing countries, and improve global partnerships to achieve the SDGs.'
+            }
+        ];
+
+        const projects = [
+            {title: 'UNFCCC (United Nations Framework Convention on Climate Change)', description: 'Established in 1992, this international environmental treaty forms the foundation of global climate action. It aims to stabilize greenhouse gas concentrations in the atmosphere to prevent dangerous human interference with the climate system. Major meetings include the annual Conference of the Parties (COP), where governments come together to negotiate climate goals. COP21 in 2015 resulted in the Paris Agreement, a landmark accord in which countries committed to limit global warming to below 2°C, preferably to 1.5°C above pre-industrial levels.'},
+            {title: 'The Paris Agreement', description: 'This is a legally binding international treaty adopted by 196 nations in 2015 at COP21 in Paris. The agreement outlines goals for reducing global greenhouse gas emissions and aims to achieve net-zero emissions by mid-century. Each country submits Nationally Determined Contributions (NDCs), outlining their plans for reducing emissions and adapting to climate impacts.'},
+            {title: 'IPCC (Intergovernmental Panel on Climate Change)', description: 'The IPCC provides scientific reports that inform global climate action. It produces comprehensive assessments on the science of climate change, its impacts, and possible response strategies. The IPCC’s reports, such as the Sixth Assessment Report (2021-2022), are key resources used by policymakers to shape climate policies.'},
+            {title: 'Green Climate Fund (GCF)', description: 'This fund was established to assist developing countries in limiting or reducing their greenhouse gas emissions and adapting to climate change impacts. It is a key element in the climate finance landscape, focusing on low-emission and climate-resilient development.'},
+            {title: 'UN-REDD Programme', description: 'Launched in 2008, the UN-REDD Programme supports countries in reducing emissions caused by deforestation and forest degradation, which are significant contributors to climate change. It also promotes the sustainable management of forests and enhances carbon stocks.'}
+        ];
+
+        const ongoingProjects = [
+            {title: 'UNFCCC - COP28', description: 'COP28 (2023) continues the annual climate negotiations between world governments to assess progress on the Paris Agreement goals. COP28 is focused on furthering global cooperation, enhancing climate finance, and ensuring nations are on track to limit warming to 1.5°C above pre-industrial levels. It also aims to finalize the Global Stocktake, a critical assessment of collective progress on climate goals.'},
+            {title: 'Green Climate Fund (GCF) Projects', description: 'The GCF continues to finance a wide array of climate projects globally, particularly in developing countries. It currently funds over 190 projects that support climate mitigation and adaptation, including renewable energy projects, sustainable land management, and community resilience-building in vulnerable regions. Current projects include the Energy Efficiency Green Bonds in Latin America, and the Building Resilience of Wetlands in Sub-Saharan Africa.'},
+            {title: 'UN-REDD Programme', description: 'The UN-REDD Programme is active in over 60 countries, supporting efforts to reduce emissions from deforestation and forest degradation while promoting sustainable forest management. Ongoing projects include the Amazon Vision initiative, aimed at enhancing the capacity of Amazon Basin countries to protect forests, and the African Forest Landscape Restoration Initiative to restore 100 million hectares of deforested land by 2030.'},
+            {title: 'Race to Zero and Race to Resilience Campaigns', description: 'These campaigns, led by the UN, involve ongoing efforts to rally cities, businesses, and financial institutions to commit to achieving net-zero emissions by 2050 and improving climate resilience. Current initiatives are focusing on mobilizing private and public investments into climate resilience infrastructure, especially in vulnerable regions.'},
+            {title: 'UNEP - Cool Coalition', description: 'UNEP’s Cool Coalition is an ongoing initiative promoting sustainable cooling solutions to address the growing demand for air conditioning in a warming world. The coalition advocates for energy-efficient cooling technologies and nature-based solutions to mitigate climate impacts. The program is actively working with governments and industries on green cooling innovations in countries such as India, Kenya, and Mexico.'}
+        ];
+
+        const goalGrid = document.querySelector('.goal-grid');
+        sdgs.forEach((sdg, index) => {
+            const goalItem = document.createElement('div');
+            goalItem.className = 'goal-item';
+            goalItem.innerHTML = `
+                <div class="goal-icon">${sdg.icon}</div>
+                <div class="goal-number">Goal ${index + 1}</div>
+                <div class="goal-title">${sdg.title}</div>
+            `;
+            goalItem.onclick = () => showModal(`SDG ${index + 1}: ${sdg.title}`, sdg.description);
+            goalGrid.appendChild(goalItem);
+        });
+
+        const projectList = document.querySelector('#climate-projects .project-list');
+        projects.forEach(project => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span class="project-icon">🌍</span>${project.title}`;
+            li.onclick = () => showModal(project.title, project.description);
+            projectList.appendChild(li);
+        });
+
+        const ongoingProjectList = document.querySelector('#ongoing-projects .project-list');
+        ongoingProjects.forEach(project => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span class="project-icon">🌍</span>${project.title}`;
+            li.onclick = () => showModal(project.title, project.description);
+            ongoingProjectList.appendChild(li);
+        });
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({behavior: "smooth"});
+            document.querySelectorAll('.nav-pill').forEach(pill => pill.classList.remove('active'));
+            document.querySelector(`.nav-pill[onclick="scrollToSection('${sectionId}')"]`).classList.add('active');
+        }
+
+        // Intersection Observer for section animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {threshold: 0.1});
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Modal functionality
+        const modal = document.getElementById("modal");
+        const modalTitle = document.getElementById("modal-title");
+        const modalDescription = document.getElementById("modal-description");
+        const span = document.getElementsByClassName("close")[0];
+
+        function showModal(title, description) {
+            modal.style.display = "block";
+            modalTitle.textContent = title;
+            modalDescription.textContent = description;
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Data Visualization</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+        /* Styling for the map and container */
+        :root {
+            --primary-color: #2c5e50;
+            --secondary-color: #27ae60;
+            --text-color: #333;
+            --bg-color: #fff;
+            --link-color: #219653;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        .header-content {
+            background: url('local-climate-impact.jpg');
+            background-color: #2c3e50;
+            color:  white;
+            padding: 50px;
+            text-align: center;
+            position: relative;
+        }
+        .nav-pills {
+            display: flex;
+            justify-content: center;
+            background-color: #34495e;
+            padding: 10px 0;
+        }
+        .nav-pill {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .nav-pill:hover {
+            background-color: #2c3e50;
+        }
+        nav {
+            background: transparent;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        nav a {
+            color: blue;
+            text-decoration: none;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+            font-size: 14px;
+        }
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .login-btn {
+            border: 2px solid #fff;
+            border-radius: 20px;
+            padding: 5px 15px;
+        }
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .controls {
+            padding: 10px;
+            background-color: #ecf0f1;
+            display: flex;
+            justify-content: center;
+        }
+        .data-layer-btn {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .data-layer-btn:hover {
+            background-color: #2980b9;
+        }
+        #data-display {
+            padding: 10px;
+            background-color: #ecf0f1;
+            font-style: italic;
+            text-align: center;
+        }
+        #help-improve, #about {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        #help-improve h2, #about h2 {
+            color: #3d5a80;
+            margin-bottom: 20px;
+        }
+
+        #help-improve p, #about p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        #help-improve form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        #help-improve input,
+        #help-improve textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #help-improve input[type="submit"] {
+            background-color: #3d5a80;
+            color: #ffffff;
+            border: none;
+            padding: 30px 24px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #help-improve input[type="submit"]:hover {
+            background-color: #2c3e50;
+        }
+
+        #about ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 auto;
+            max-width: 500px;
+            text-align: left;
+        }
+
+        #about li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        #about li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #3d5a80;
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        #about a {
+            color: #3d5a80;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #about a:hover {
+            text-decoration: underline;
+        }
+        #map-container {
+            width: 100%;
+            height: 650px;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+        </div>
+        <a href="login.html" class="login-btn">Log In</a>
+    </nav>
+    <div class="header-content">
+        <h1>Local Climate Impact Dashboard</h1>
+        <p>Exploring climate change impacts and related data</p>
+    </div>
+    <div class="nav-pills">
+        <a href="#climate-data" class="nav-pill" onclick="scrollToSection('climate-data')">Climate Data</a>
+        <a href="#help-improve" class="nav-pill" onclick="scrollToSection('help-improve')">Help world Improve</a>
+        <a href="#about" class="nav-pill" onclick="scrollToSection('about')">About</a>
+    </div>
+
+    <h1>Climate Data Visualization</h1>
+    <div id="climate-data">
+        <div class="controls">
+            <button class="data-layer-btn" onclick="showCO2Data()">Show CO2 Emissions</button>
+            <button class="data-layer-btn" onclick="showTemperatureAnomalies()">Show Temperature Anomalies</button>
+            <button class="data-layer-btn" onclick="showGenderDisparityData()">Show Gender Disparity Index</button>
+        </div>
+
+
+    <!-- Container for the map or iframe -->
+    <div id="map-container">
+        <!-- Leaflet map will be displayed here by default -->
+        <div id="map"></div>
+    </div>
+
+    <div id="help-improve">
+        <h2>🌟 Help to Improve Our Understanding 🌟</h2>
+        <p>Your contribution can make a world of difference! 🌍✨</p>
+        <p>By sharing your local data, you're helping us paint a more accurate picture of climate change impacts around the globe. Together, we can build a better future! 🌱🔬</p>
+        <form id="improve-form">
+            <input type="text" placeholder="Name" required>
+            <input type="email" placeholder="Email" required>
+            <input type="file" accept=".csv,.xlsx,.json">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="about">
+        <h2>About Our Data Sources 📚</h2>
+        <p>We believe in transparency and accuracy. Here's where our data comes from:</p>
+        <ul>
+            <li>🌡️ Temperature data: NASA GISTEMP - Cutting-edge global temperature analysis</li>
+            <li>🏭 CO2 Emissions data: Our World in Data CO2 Database - Comprehensive emissions tracking</li>
+            <li>⚖️ Gender Inequality Index: United Nations Development Programme - Promoting equality worldwide</li>
+        </ul>
+        <p>These reliable sources help us provide you with the most accurate and up-to-date climate information. Together, we can make informed decisions for a sustainable future! 🌍💚</p>
+    </div>
+
+    <!-- Leaflet and JavaScript Libraries -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize the Leaflet map for CO2 emissions
+        var map;
+        function showLeafletMap() {
+            // Clear the map-container content
+            document.getElementById('map-container').innerHTML = '<div id="map"></div>';
+
+            // Create the Leaflet map instance
+            map = L.map('map').setView([0, 0], 2); // Adjust as needed
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add CO2 emissions data to the map (replace with your actual data)
+            // Example: Add markers, layers, etc.
+            // L.marker([latitude, longitude]).addTo(map).bindPopup('CO2 Emission Site');
+        }
+
+        async function showCO2Data() {
+            const data = await fetchData('https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv');
+            if (!data) return;
+
+            clearLayers();
+
+            const rows = d3.csvParse(data);
+            const latestYear = d3.max(rows, d => d.year);
+            const co2Data = rows.filter(d => d.year === latestYear && d.co2_per_capita !== "");
+
+            co2Data.forEach(d => {
+                const lat = Math.random() * 180 - 90; // Random lat for visualization
+                const lon = Math.random() * 360 - 180; // Random lon for visualization
+                L.circle([lat, lon], {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.5,
+                    radius: Math.sqrt(parseFloat(d.co2_per_capita)) * 30000
+                }).bindPopup(`${d.country}: ${parseFloat(d.co2_per_capita).toFixed(2)} tonnes per capita`)
+                 .addTo(map);
+            });
+
+            document.getElementById('data-display').innerText = `CO2 Emissions Data (${latestYear}) - Source: Our World in Data`;
+        }
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('improve-form').onsubmit = function(e) {
+            e.preventDefault();
+            alert('Thank you for your submission! We will review your data.');
+        };
+
+        function clearLayers() {
+            if (currentLayer) map.removeLayer(currentLayer);
+            map.eachLayer(layer => {
+                if (layer instanceof L.Circle || layer instanceof L.Marker || layer instanceof L.Popup) {
+                    map.removeLayer(layer);
+                }
+            });
+        }
+
+        // Function to display the temperature anomalies map
+        function showTemperatureAnomalies() {
+            // Clear the current map or content
+            document.getElementById('map-container').innerHTML = '';
+
+            // Create and append an iframe that loads the temperature_anomaly_map.html file
+            var iframe = document.createElement('iframe');
+            iframe.src = 'temperature_anomaly_map.html';  // Path to your external HTML file
+            iframe.width = '100%';
+            iframe.height = '650px';
+            iframe.frameBorder = '0';
+
+            // Add the iframe to the map container
+            document.getElementById('map-container').appendChild(iframe);
+        }
+        async function showGenderDisparityData() {
+            const data = await fetchData('https://raw.githubusercontent.com/bellemcqueen/Gender-Inequality-Index-GII-2021/main/GGI2021.csv');
+            if (!data) return;
+
+            clearLayers();
+
+            const rows = d3.csvParse(data);
+            const giiData = rows.filter(d => d.GII !== "");
+
+            const colorScale = d3.scaleSequential(d3.interpolateYlOrRd)
+                                 .domain([0, d3.max(giiData, d => parseFloat(d.GII))]);
+
+            giiData.forEach(d => {
+                const lat = Math.random() * 180 - 90; // Random lat for visualization
+                const lon = Math.random() * 360 - 180; // Random lon for visualization
+                L.circle([lat, lon], {
+                    color: colorScale(d.GII),
+                    fillColor: colorScale(d.GII),
+                    fillOpacity: 0.7,
+                    radius: 100000
+                }).bindPopup(`${d.Country}: GII ${parseFloat(d.GII).toFixed(3)}`)
+                 .addTo(map);
+            });
+
+            document.getElementById('data-display').innerText = `Gender Inequality Index Data (2021) - Source: UNDP Human Development Reports`;
+        }
+        // Load the Leaflet map on page load
+        window.onload = showLeafletMap;
+    </script>
+
+</body>
+</html>
